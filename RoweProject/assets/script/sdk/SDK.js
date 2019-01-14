@@ -1,57 +1,78 @@
+const Constants = require('Constants');
 function SDK() {
     this.curSDK = null;
-    this.curOS = "none";
-}
+    this.userData = {};
+    this.userData.user = {};
 
-SDK.prototype.init = function () {
-    if (cc.sys.os === cc.sys.OS_WINDOWS) {
-        this.curOS = cc.sys.OS_WINDOWS;
-        this.initWinSDK();
-    } else if (cc.sys.os === cc.sys.OS_ANDROID) {
-        this.curOS = cc.sys.OS_ANDROID;
-        this.initAndroidSDK();
-        this.login();
-    } else if (cc.sys.os === cc.sys.OS_IOS) {
-        this.curOS = cc.sys.OS_IOS;
-        this.initIOSSDK();
-        this.login();
-    }
+    this.init = function () {
+        if (cc.sys.platform === cc.sys.WECHAT_GAME){
+            this.initWeChatSDK();
+
+            cc.log(window.wx.getLaunchOptionsSync());
+        } else if (cc.sys.os === cc.sys.OS_WINDOWS) {
+            this.initWinSDK();
+        } else if (cc.sys.os === cc.sys.OS_ANDROID) {
+            this.initAndroidSDK();
+        } else if (cc.sys.os === cc.sys.OS_IOS) {
+            this.initIOSSDK();
+        }
+    };
+
+    this.initWinSDK = function () {
+        var sdk = require("WinSDK");
+        this.curSDK = new sdk();
+    };
+
+    this.initAndroidSDK = function () {
+        cc.log("initAndroidSDK done === ");
+    };
+
+    this.initIOSSDK = function () {
+        cc.log("initIOSSDK done === ");
+    };
+
+    this.initWeChatSDK = function () {
+        cc.log("initWeChatSDK done === ");
+    };
 };
 
-SDK.prototype.initWinSDK = function () {
-    cc.log("initWinSDK done === ");
+SDK.prototype.getName = function () {
+    return this.name;
 };
 
-SDK.prototype.initAndroidSDK = function () {
-    // var sdk = require("Google");
-    // this.curSDK = new sdk();
-    cc.log("initAndroidSDK done === ");
+SDK.prototype.setUserData = function (data) {
+    this.userData.user.id = data.id;
+    this.userData.user.token = data.token;
+    this.userData.user.sign = data.sign;
+    this.userData.user.timestamp = data.timestamp;
 };
 
-SDK.prototype.initIOSSDK = function () {
-    // var sdk = require("Tencent");
-    // this.curSDK = new sdk();
-    cc.log("initIOSSDK done === ");
-};
-
-SDK.prototype.getCurSDKName = function () {
-    return this.curSDK.getName();
-};
-
-SDK.prototype.getCurOS = function () {
-    return this.curOS;
+SDK.prototype.getUserData = function () {
+    return this.userData;
 };
 
 SDK.prototype.login = function () {
-    this.curSDK.login();
+    cc.log("=== sdk proto login ===");
 };
 
 SDK.prototype.logout = function () {
-    this.curSDK.logout();
+    cc.log("=== sdk proto logout ===");
 };
 
-SDK.prototype.pay = function () {
-    this.curSDK.pay();
+SDK.prototype.roleData = function () {
+    cc.log("=== sdk proto roleData ===");
+};
+
+SDK.prototype.uploginData = function () {
+    cc.log("=== sdk proto uploginData ===");
+};
+
+SDK.prototype.share = function () {
+    cc.log("=== sdk proto share ===");
+};
+
+SDK.prototype.pay = function (type, config) {
+    cc.log("=== sdk proto pay ===");
 };
 
 module.exports = SDK;

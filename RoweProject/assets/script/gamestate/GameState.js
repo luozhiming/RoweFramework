@@ -9,20 +9,25 @@ function GameState() {
 
     this.init = function (sdk) {
         curSDK = sdk;
-        var curOS = curSDK.getCurOS();
-        if (curOS === cc.sys.OS_WINDOWS) {
-            this.setCurState(GAME_STATE.LOGIN);
-        }
     };
 
     this.setCurState = function (state) {
         if (!stateObjs[state]) {
             if (state === GAME_STATE.LOGIN) {
                 stateObjs[state] = new LoginStateClass();
+            } else if (state === GAME_STATE.MAINSCENE) {
+                stateObjs[state] = new MainStateClass();
+            } else if (state === GAME_STATE.BATTLE) {
+                stateObjs[state] = new BattleStateClass();
             }
         }
         curGameState = stateObjs[state];
-        curGameState.showDefaultUI();
+
+        if (curGameState) {
+            curGameState.showDefaultUI();
+        } else {
+            cc.log("game state is null");
+        }
     };
 
     this.getCurState = function() {
