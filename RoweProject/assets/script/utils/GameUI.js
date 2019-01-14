@@ -17,7 +17,7 @@ function UI() {
         txtBtnLeft = txtBtnLeft == undefined ? this.txt("确定") : this.txt(txtBtnLeft);
         this.loadPrefab("prefab/common/msgbox", cc.director.getScene(), (pNode) => {
             var msgWnd = pNode.getChildByName("msgbox");
-            msgWnd.setLocalZOrder(UI_ZORDER.MSG_BOX);
+            msgWnd.zIndex = UI_ZORDER.MSG_BOX;
             var contentView = msgWnd.getChildByName("msgScrollView").getChildByName("view").getChildByName("content");
             var txtTile = msgWnd.getChildByName("title").getComponent(cc.Label);
             var txtContent = contentView.getChildByName("txt").getComponent(cc.Label);
@@ -33,8 +33,8 @@ function UI() {
             } else {
                 txtTile.horizontalAlign = cc.Label.HorizontalAlign.CENTER;
             }
-            msgWnd.x = cc.director.getWinSize().width / 2;
-            msgWnd.y = cc.director.getWinSize().height / 2;
+            msgWnd.x = cc.winSize.width / 2;
+            msgWnd.y = cc.winSize.height / 2;
             txtTile.string = this.txt(title);
             txtContent.string = this.txt(content);
 
@@ -64,14 +64,16 @@ function UI() {
                 });
             }
 
-            if (contentView.getChildByName("txt").height > contentView.height) {
-                contentView.height = contentView.getChildByName("txt").height;
-            }
-
             btnClose.on(cc.Node.EventType.TOUCH_END, (event) => {
                 cancelCB && cancelCB();
                 msgWnd.destroy();
             });
+
+            setTimeout(()=>{
+                if (contentView.getChildByName("txt").height > contentView.height) {
+                    contentView.height = contentView.getChildByName("txt").height;
+                }
+            }, 20);
         });
     };
 

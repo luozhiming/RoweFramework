@@ -28,6 +28,9 @@ cc.Class({
         var gameinit = new GameInit();
         gameinit.init();
 
+        var GE = require("GE");
+        GE.init(this);
+
         this.loadRes();
     },
 

@@ -78,11 +78,11 @@ GameStateBase.prototype.restoreUIStack = function () {
 
 // 添加弹窗
 GameStateBase.prototype.addWnd = function (url, inputData, callback) {
-    var gameEngine = cc.director.getScene().getChildByName("Global").getComponent("GameEngine");
-    gameEngine.getGameUI().lockUI();
+    var GE = require("GE").getData();
+    GE.ui.lockUI();
 
     cc.loader.loadRes(url, (err, prefab) => {
-        gameEngine.getGameUI().unlockUI();
+        GE.ui.unlockUI();
 
         var wnd = cc.instantiate(prefab);
         var curScene = cc.director.getScene();
@@ -151,8 +151,8 @@ GameStateBase.prototype.addLayer = function (url, inputData, callback, persist, 
     }
     this.layerHash[newUI.url] = newUI;
 
-    var gameEngine = cc.director.getScene().getChildByName("Global").getComponent("GameEngine");
-    gameEngine.getGameUI().lockUI();
+    var GE = require("GE").getData();
+    GE.ui.lockUI();
 
     // 加载新UI
     cc.loader.loadRes(newUI.url, (err, prefab) => {
@@ -171,7 +171,7 @@ GameStateBase.prototype.addLayer = function (url, inputData, callback, persist, 
             newUI.node.zIndex = this.layerZOrder++;
         }
 
-        gameEngine.getGameUI().unlockUI();
+        GE.ui.unlockUI();
     });
 };
 
