@@ -2,7 +2,7 @@ var GameStateBase = require('GameStateBase');
 
 function LoginState() {
     this.name = "LoginState";
-    this.defaultCanvas = "login";
+    this.defaultUI = "login";
 }
 
 LoginState.prototype = new GameStateBase();

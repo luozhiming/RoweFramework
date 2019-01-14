@@ -10,8 +10,7 @@ function ModLoader() {
         gameState.init(sdk);
         window.gameState = gameState;
 
-        // sdk.curSDK.login();
-        cc.log(sdk.curSDK.getName());
+        sdk.curSDK.login();
     };
 }
 

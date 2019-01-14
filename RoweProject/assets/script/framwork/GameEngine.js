@@ -63,10 +63,6 @@ cc.Class({
         return this.utils;
     },
 
-    getAudio() {
-        return this.audio;
-    },
-
     getGameConfig(name) {
         if (!name) {
             return this.gameConfig;

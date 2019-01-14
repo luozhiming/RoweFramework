@@ -148,23 +148,15 @@ function UI() {
     };
 
     this.lockUI = function () {
-        var topLayer = cc.director.getScene().getChildByName("topLayer");
-        topLayer.getComponent("TopLayer").lockLayer();
     };
 
     this.unlockUI = function () {
-        var topLayer = cc.director.getScene().getChildByName("topLayer");
-        topLayer.getComponent("TopLayer").unlockLayer();
     };
 
     this.netLoading = function () {
-        var topLayer = cc.director.getScene().getChildByName("topLayer");
-        topLayer.getComponent("TopLayer").netLoading();
     };
 
     this.netLoadingEnd = function () {
-        var topLayer = cc.director.getScene().getChildByName("topLayer");
-        topLayer.getComponent("TopLayer").netLoadingEnd();
     };
 };
 
