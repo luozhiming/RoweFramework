@@ -84,30 +84,27 @@ function UI() {
      * @param {*} duration 位移动画持续时间
      */
     this.showTip = function (text, offset, duration) {
-        let realOffset = offset || 0;
-        let realDuration = duration || 0.5;
+        offset = offset || 0;
+        duration = duration || 0.5;
 
         if (!this.tipWnds) {
             this.tipWnds = [];
         }
 
-        var showWindow = (iwnd) => {
-            var mNode = iwnd.getChildByName(`model${realType}`);
-            var lNode = mNode.getChildByName(`label${realType}`);
-            var lab = lNode.getComponent(cc.Label);
-            mNode.active = true;
-            lab.string = this.txt(text);
-            iwnd.y += realOffset;
-            for (let i = 0; i < this.tipWnds.length; i++) {
+        var showWindow = (wnd) => {
+            wnd.getChildByName("content").getComponent(cc.Label).string = this.txt(text);
+            wnd.y += offset;
+            for (var i = 0; i < this.tipWnds.length; i++) {
                 if (this.tipWnds[i].isRun) {
                     continue;
                 }
+
                 this.tipWnds[i].wnd.stopAllActions();
                 this.tipWnds[i].wnd.runAction(actDelay(0, this.tipWnds[i].wnd));
                 this.tipWnds[i].isRun = true;
             }
-            this.tipWnds.push({ isRun: false, wnd: iwnd });
-            iwnd.runAction(actDelay(1, iwnd));
+            this.tipWnds.push({ isRun: false, wnd: wnd });
+            wnd.runAction(actDelay(0.5, wnd));
         }
 
         var actDelay = (displayTime, targetWnd) => {
@@ -116,14 +113,14 @@ function UI() {
                 targetWnd.destroy();
                 this.tipWnds.splice(0, 1);
             });
-            var moveUp = cc.moveBy(realDuration, cc.p(0, 300));
+            var moveUp = cc.moveBy(duration, cc.v2(0, 300));
             var seq = cc.sequence(delay, moveUp, func);
             return seq;
         }
 
-        let topLayer = cc.director.getScene().getChildByName('topLayer');
+        var topLayer = cc.director.getScene().getChildByName('topLayer');
         if (this.tipPrefab) {
-            let wnd = cc.instantiate(this.tipPrefab);
+            var wnd = cc.instantiate(this.tipPrefab);
             topLayer.addChild(wnd);
             showWindow(wnd);
         } else {
@@ -150,15 +147,23 @@ function UI() {
     };
 
     this.lockUI = function () {
+        var topLayer = cc.director.getScene().getChildByName("topLayer");
+        topLayer.getComponent("TopLayer").lockLayer();
     };
 
     this.unlockUI = function () {
+        var topLayer = cc.director.getScene().getChildByName("topLayer");
+        topLayer.getComponent("TopLayer").unlockLayer();
     };
 
     this.netLoading = function () {
+        var topLayer = cc.director.getScene().getChildByName("topLayer");
+        topLayer.getComponent("TopLayer").netLoading();
     };
 
     this.netLoadingEnd = function () {
+        var topLayer = cc.director.getScene().getChildByName("topLayer");
+        topLayer.getComponent("TopLayer").netLoadingEnd();
     };
 };
 
